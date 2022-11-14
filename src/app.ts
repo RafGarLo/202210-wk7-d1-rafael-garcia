@@ -9,7 +9,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
-app.use('/products', productRouter);
+app.use('/furniture', productRouter);
 
 app.use((error: Error, _req: Request, resp: Response, next: NextFunction) => {
     console.log(error.message);
