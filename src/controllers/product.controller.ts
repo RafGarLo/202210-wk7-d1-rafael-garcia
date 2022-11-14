@@ -10,7 +10,9 @@ export class ProductController {
         resp.end();
     };
     getController = (req: Request, resp: Response) => {
+        data = data.filter((item) => item.id === +req.params.id);
         resp.send('Hello World');
+        resp.json(data);
         resp.end();
     };
     postController = (req: Request, resp: Response) => {
