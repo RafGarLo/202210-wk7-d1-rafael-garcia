@@ -1,5 +1,5 @@
 {
-    "name": "week6.server",
+    "name": "week7-day1-challenge",
     "version": "1.0.0",
     "description": "modula",
     "main": "index.js",
@@ -19,6 +19,7 @@
         "singleQuote": true
     },
     "dependencies": {
+        "@types/dotenv": "^8.2.0",
         "cors": "^2.8.5",
         "cross-env": "^7.0.3",
         "dotenv": "^16.0.3",
