@@ -1,46 +1,104 @@
-import { Product } from '../interfaces/product';
 import { NextFunction, Request, Response } from 'express';
-import importData from '../mock/data.json' assert { type: 'json' };
-
-let data: Array<Product> = importData.furniture;
+import { Data } from '../data/data.js';
+import { HTTPError } from '../interfaces/error.js';
+import { Product } from '../interfaces/product.js';
 
 export class ProductController {
-    getAllController = (req: Request, resp: Response) => {
-        resp.json(data);
-        resp.end();
-    };
-    getController = (req: Request, resp: Response) => {
-        data = data.filter((item) => item.id === +req.params.id);
-        resp.send('Hello World');
-        resp.json(data);
-        resp.end();
-    };
-    postController = (req: Request, resp: Response) => {
-        const newProduct = {
-            ...req.body,
-            id: data.length + 1,
-        };
-        data.push(newProduct);
-        resp.json(newProduct);
-        resp.end();
-    };
-    patchController = (req: Request, resp: Response) => {
-        const updateProduct = {
-            ...data.find((item) => item.id === +req.params.id),
-            ...req.body,
-        };
-        data[data.findIndex((item) => item.id === +req.params.id)] =
-            updateProduct;
-        resp.json(updateProduct);
-        resp.end();
-    };
-    deleteController = (req: Request, resp: Response, next: NextFunction) => {
-        if (!data.find((item) => item.id === +req.params.id)) {
-            next(new Error('Not Found'));
+    constructor(public dataModel: Data<Product>) {}
+
+    async getAll(req: Request, resp: Response, next: NextFunction) {
+        try {
+            const data = await this.dataModel.getAll();
+            resp.json(data).end();
+        } catch (error) {
+            const httpError = new HTTPError(
+                503,
+                'Service Unavailable',
+                (error as Error).message
+            );
+            next(httpError);
             return;
         }
-        data = data.filter((item) => item.id !== +req.params.id);
-        resp.json({});
-        resp.end();
+    }
+    get = (req: Request, resp: Response) => {
+        // this.dataModel = this.dataModel.filter(
+        //     (item) => item.id === +req.params.id
+        // );
+        // resp.send('Hello World');
+        // resp.json(this.dataModel);
+        // resp.end();
     };
+    async post(req: Request, resp: Response, next: NextFunction) {
+        if (!req.body.title) {
+            const httpError = new HTTPError(
+                406,
+                'Not Acceptable',
+                'Title not included in the data'
+            );
+            next(httpError);
+            return;
+        }
+
+        try {
+            const newProduct = await this.dataModel.post(req.body);
+            resp.json(newProduct).end();
+        } catch (error) {
+            const httpError = new HTTPError(
+                503,
+                'Service Unavailable',
+                (error as Error).message
+            );
+            next(httpError);
+            return;
+        }
+    }
+    async patch(req: Request, resp: Response, next: NextFunction) {
+        try {
+            const updateProduct = await this.dataModel.patch(
+                +req.params.id,
+                req.body
+            );
+            resp.json(updateProduct).end();
+        } catch (error) {
+            if ((error as Error).message === 'Not found id') {
+                const httpError = new HTTPError(
+                    404,
+                    'Not Found',
+                    (error as Error).message
+                );
+                next(httpError);
+                return;
+            }
+            const httpError = new HTTPError(
+                503,
+                'Service unavailable',
+                (error as Error).message
+            );
+            next(httpError);
+            return;
+        }
+    }
+    async delete(req: Request, resp: Response, next: NextFunction) {
+        try {
+            await this.dataModel.delete(+req.params.id);
+            resp.json({}).end();
+        } catch (error) {
+            if ((error as Error).message === 'Not found id') {
+                const httpError = new HTTPError(
+                    404,
+                    'Not Found',
+                    (error as Error).message
+                );
+                next(httpError);
+                return;
+            }
+            const httpError = new HTTPError(
+                503,
+                'Service unavailable',
+                (error as Error).message
+            );
+            next(httpError);
+            return;
+        }
+    }
 }
