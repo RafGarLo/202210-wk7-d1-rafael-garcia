@@ -1,16 +1,19 @@
 import { ProductController } from '../controllers/product.controller.js';
 import { Router } from 'express';
+import { ProductFileData } from '../data/products.file.data.js';
 
 export const productRouter = Router();
 
-const controller = new ProductController();
+const controller = new ProductController(new ProductFileData());
 
-productRouter.get('/', controller.getAllController);
+//roductRouter.get('/', (req, resp) => controller.getAllController(req, resp));
 
-productRouter.get('/:id', controller.getController);
+productRouter.get('/', controller.getAll.bind(controller));
 
-productRouter.post('/', controller.postController);
+productRouter.get('/:id', controller.get.bind(controller));
 
-productRouter.patch('/:id', controller.patchController);
+productRouter.post('/', controller.post.bind(controller));
 
-productRouter.delete('/:id', controller.deleteController);
+productRouter.patch('/:id', controller.patch.bind(controller));
+
+productRouter.delete('/:id', controller.delete.bind(controller));
