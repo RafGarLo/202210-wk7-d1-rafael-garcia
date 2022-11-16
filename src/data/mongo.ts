@@ -26,3 +26,4 @@ const productSchema = new Schema ({
     price: String,
 })
 
+main()
