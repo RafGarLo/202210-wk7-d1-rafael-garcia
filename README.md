@@ -1,4 +1,4 @@
-## Week 7 - Challenge 2 Rafael Garcia
+## Week 7 - Challenge 2 & 3 Rafael Garcia
 
 API REST Things I already know
 
