@@ -11,11 +11,11 @@ console.log(uri);
     const connector = await mongoose.connect(uri)
     console.log(connector)
     //console.log(mongoose.connection.readyState)
-  // const Product = model('Product', productSchema, 'products');
+    // const Product = model('Product', productSchema, 'products');
 
 //await Product.create({name:'chair', category: 'office', overview: 'very nice', price: '150'});
 
-     connector.disconnect()
+    connector.disconnect()
 })
 
 // const productSchema = new Schema ({
