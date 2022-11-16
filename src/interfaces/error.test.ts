@@ -10,7 +10,7 @@ describe('Given', () => {
         expect(error).toBeInstanceOf(HTTPError);
         expect(error).toHaveProperty('statusCode', 418);
         expect(error).toHaveProperty('statusMessage', 'Tea Pot');
-        expect(error).toHaveProperty('message', 'ja ja ja');
+        expect(error).toHaveProperty('message', 'been there, donde that');
         expect(error).toHaveProperty('name', 'HTTPError');
     });
 });
