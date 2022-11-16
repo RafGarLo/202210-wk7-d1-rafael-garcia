@@ -14,4 +14,3 @@ export class HTTPError extends Error implements CustomError {
         this.name = 'HTTPError';
     }
 }
-

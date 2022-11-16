@@ -1,10 +1,8 @@
-
 import { Car } from "../interfaces/car";
 import { Data, id } from "./data";
 import fs from 'fs/promises';
 import * as dotenv from 'dotenv';
 dotenv.config();
-
 export class CarFileData implements Data<Car> {
     dataFileURL: string;
     constructor() {

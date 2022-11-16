@@ -46,5 +46,3 @@ app.use(
         resp.status(status).json(result).end();
     }
 );
-
-

@@ -8,16 +8,15 @@ console.log(uri);
 
 (async () => {
     
-   const connector = await mongoose.connect(uri)
-   console.log(connector)
-   //console.log(mongoose.connection.readyState)
+    const connector = await mongoose.connect(uri)
+    console.log(connector)
+    //console.log(mongoose.connection.readyState)
   // const Product = model('Product', productSchema, 'products');
 
 //await Product.create({name:'chair', category: 'office', overview: 'very nice', price: '150'});
 
 connector.disconnect()
 })
-
 
 // const productSchema = new Schema ({
 
