@@ -15,7 +15,7 @@ console.log(uri);
 
 //await Product.create({name:'chair', category: 'office', overview: 'very nice', price: '150'});
 
-connector.disconnect()
+     connector.disconnect()
 })
 
 // const productSchema = new Schema ({

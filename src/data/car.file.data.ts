@@ -58,4 +58,4 @@ export class CarFileData implements Data<Car> {
         const finalData = { products: data }
         return fs.writeFile(this.dataFileURL, JSON.stringify(finalData));
     }
-  }
+}
