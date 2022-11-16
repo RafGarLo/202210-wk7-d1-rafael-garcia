@@ -14,9 +14,9 @@ app.use(express.json());
 
 app.use('/furniture', productRouter);
 
-app.use((_req, res, next) => {
-    console.log('MiddleWwre')
-    res.setHeader('Access-Control-Allow-Origin', '*')
+app.use((req, res, next) => {
+    const origin = req.header('Origin');
+    res.setHeader('Access-Control-Allow-Origin', origin as string)
     next()
 })
 
