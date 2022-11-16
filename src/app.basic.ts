@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { productRouter } from './router/product.router.js';
 import { CustomError } from './interfaces/error.js';
 
+
 export const app = express();
 app.disable("x-powered-by");
 
@@ -11,13 +12,13 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
+app.use('/furniture', productRouter);
+
 app.use((_req, res, next) => {
     console.log('MiddleWwre')
     res.setHeader('Access-Control-Allow-Origin', '*')
     next()
 })
-
-app.use('/furniture', productRouter);
 
 app.get('/', (req, res) => {
     res.send('API express de products').end();

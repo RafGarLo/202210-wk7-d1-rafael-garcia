@@ -14,4 +14,4 @@ export class HTTPError extends Error implements CustomError {
         this.name = 'HTTPError';
     }
 }
-new HTTPError(500, 'Bad', 'Estoy en el bar, ahora vuelvo');
+
