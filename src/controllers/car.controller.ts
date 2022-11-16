@@ -16,7 +16,6 @@ export class CarController {
             return;
         }
     }
-    
     async findById(req: Request, resp: Response, next: NextFunction) {
         try {
             const data = await this.dataModel.get;
