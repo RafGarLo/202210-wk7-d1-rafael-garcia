@@ -20,23 +20,23 @@ export class ProductController {
             return;
         }
     }
-    async get(req: Request, resp: Response) {
+    async get(req: Request, resp: Response, next: NextFunction) {
         try {
-            const data = await this.dataModel.get(+req.params.id)
-        resp.json(data)
+            const data = await this.dataModel.get(+req.params.id);
+            resp.json(data);
         } catch (error) {
-            
+            next(this.#createHTTPError(error as Error));
+            return;
         }
-
-
+    }
         
-    };
+    
     async post(req: Request, resp: Response, next: NextFunction) {
-        if (!req.body.title) {
+        if (!req.body.name) {
             const httpError = new HTTPError(
                 406,
                 'Not Acceptable',
-                'Title not included in the data'
+                'Name not included in the data'
             );
             next(httpError);
             return;
@@ -63,23 +63,9 @@ export class ProductController {
             );
             resp.json(updateProduct).end();
         } catch (error) {
-            if ((error as Error).message === 'Not found id') {
-                const httpError = new HTTPError(
-                    404,
-                    'Not Found',
-                    (error as Error).message
-                );
-                next(this.#createHTTPError(error as Error))
-                return httpError;
-                
-            }
-            const httpError = new HTTPError(
-                503,
-                'Service unavailable',
-                (error as Error).message
-            );
-            next(httpError);
+            next(this.#createHTTPError(error as Error));
             return;
+            
         }
     }
     async delete(req: Request, resp: Response, next: NextFunction) {
@@ -87,21 +73,7 @@ export class ProductController {
             await this.dataModel.delete(+req.params.id);
             resp.json({}).end();
         } catch (error) {
-            if ((error as Error).message === 'Not found id') {
-                const httpError = new HTTPError(
-                    404,
-                    'Not Found',
-                    (error as Error).message
-                );
-                next(httpError);
-                return;
-            }
-            const httpError = new HTTPError(
-                503,
-                'Service unavailable',
-                (error as Error).message
-            );
-            next(httpError);
+            next(this.#createHTTPError(error as Error));
             return;
         }
     }
