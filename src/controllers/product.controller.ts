@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Data } from '../data/data.js';
-import { HTTPError } from '../interfaces/error.js';
+import { HTTPError } from '../interfaces/error';
 import { Product } from '../interfaces/product.js';
 
 export class ProductController {
