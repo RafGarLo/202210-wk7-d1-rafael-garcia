@@ -89,9 +89,4 @@ export class CarController {
         );
         return httpError;
     }
-
-
-
-
-
 }
