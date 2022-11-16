@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/furniture', productRouter);
 
 app.use((req, res, next) => {
-    const origin = req.header('Origin');
+    const origin = req.header('Origin')  || '*';
     res.setHeader('Access-Control-Allow-Origin', origin as string)
     next()
 })

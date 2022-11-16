@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Data } from '../data/data.js';
-import { HTTPError } from '../interfaces/error';
+import { HTTPError } from '../interfaces/error.js';
 import { Product } from '../interfaces/product.js';
 
 export class ProductController {
@@ -20,13 +20,16 @@ export class ProductController {
             return;
         }
     }
-    get = (req: Request, resp: Response) => {
-        // this.dataModel = this.dataModel.filter(
-        //     (item) => item.id === +req.params.id
-        // );
-        // resp.send('Hello World');
-        // resp.json(this.dataModel);
-        // resp.end();
+    async get(req: Request, resp: Response) {
+        try {
+            const data = await this.dataModel.get(+req.params.id)
+        resp.json(data)
+        } catch (error) {
+            
+        }
+
+
+        
     };
     async post(req: Request, resp: Response, next: NextFunction) {
         if (!req.body.title) {
@@ -66,8 +69,9 @@ export class ProductController {
                     'Not Found',
                     (error as Error).message
                 );
-                next(httpError);
-                return;
+                next(this.#createHTTPError(error as Error))
+                return httpError;
+                
             }
             const httpError = new HTTPError(
                 503,
@@ -100,5 +104,22 @@ export class ProductController {
             next(httpError);
             return;
         }
+    }
+    #createHTTPError (error: Error) {
+        if ((error as Error).message === 'Not found id') {
+            const httpError = new HTTPError(
+                404,
+                'Not Found',
+                (error as Error).message
+            );
+            return httpError;
+            
+        }
+        const httpError = new HTTPError(
+            503,
+            'Service unavailable',
+            (error as Error).message
+        );
+        return httpError;
     }
 }

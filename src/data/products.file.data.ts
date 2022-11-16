@@ -17,9 +17,9 @@ export class ProductFileData implements Data<Product> {
     }
     async get(id: id): Promise<Product> {
         return fs.readFile(this.dataFileURL, 'utf-8').then((data) => {
-            const aData = JSON.parse(data) as Array<Product>;
+            const aData = JSON.parse(data).products as Array<Product>;
             const item = aData.find((item) => item.id === id);
-            if (!item) throw new Error();
+            if (!item) throw new Error('id Not Found');
             return item;
         });
     }
@@ -38,12 +38,13 @@ export class ProductFileData implements Data<Product> {
         return Math.trunc(Math.random() * 1_000_000);
     }
     #saveData(data: Array<Product>) {
-        return fs.writeFile(this.dataFileURL, JSON.stringify(data));
+        const finalData = {products: data}
+        return fs.writeFile(this.dataFileURL, JSON.stringify(finalData));
     }
     async patch(id: id, updateProduct: Partial<Product>): Promise<Product> {
         const aData = await this.getAll();
         const index = aData.findIndex((item) => item.id === id);
-        if (!index) throw new Error('Did not find id');
+        if (!index) throw new Error('id Not Found');
 
         aData[index] = {
             ...aData[index],
@@ -56,7 +57,7 @@ export class ProductFileData implements Data<Product> {
     async delete(id: id): Promise<void> {
         const aData = await this.getAll();
         const index = aData.findIndex((item) => item.id === id);
-        if (!index) throw new Error('Did not find id');
+        if (index < 0) throw new Error('id Not Found');
         aData.filter((item) => item.id !== id);
         await this.#saveData(aData);
     }
