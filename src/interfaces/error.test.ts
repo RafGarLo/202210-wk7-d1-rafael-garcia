@@ -3,7 +3,7 @@ import { CustomError, HTTPError } from './error';
 describe('Given', () => {
     let error: CustomError;
     beforeEach(() => {
-        error = new HTTPError(418, 'Tea Pot', 'ja ja ja');
+        error = new HTTPError(418, 'Tea Pot', 'been there, donde that');
     });
     test('it should first', () => {
         expect(error).toBeInstanceOf(Error);
