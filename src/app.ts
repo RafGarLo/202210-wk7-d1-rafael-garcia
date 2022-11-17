@@ -7,9 +7,12 @@ import { tableRouter } from './router/table.js';
 
 export const app = express();
 app.disable("x-powered-by");
+const corsOptions = {
+    origin: '*',
+};
 
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use((req, res, next) => {
