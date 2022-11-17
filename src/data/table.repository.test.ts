@@ -37,7 +37,7 @@ describe('Given ...', () => {
     });
     test('Then patch should return the object with the updated property', async () => {
         const updatedTable = {
-          name: 'meson',
+        name: 'meson',
         };
     const result = await repository.patch(testIds[0], updatedTable);
     expect(result.name).toEqual(updatedTable.name);
