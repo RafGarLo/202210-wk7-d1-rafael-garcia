@@ -1,7 +1,7 @@
 import express, { NextFunction, Response, Request } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import { productRouter } from './router/product.router.js';
+
 import { CustomError } from './interfaces/error.js';
 import { tableRouter } from './router/table.js';
 
@@ -18,7 +18,6 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/furniture', productRouter);
 app.use('/table', tableRouter);
 
 app.get('/', (req, res) => {

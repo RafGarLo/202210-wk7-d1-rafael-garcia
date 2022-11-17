@@ -1,12 +1,12 @@
 export type Table = {
-    id: string | number;
+    id: string;
     name: string;
     material: string;
     recycled: boolean;
 }
 
 export type ProtoTable = {
-    name?: string | number;
+    name?: string;
     material?: string;
     recycled?: boolean;
 }
