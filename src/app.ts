@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/table', tableRouter);
+app.use('/tables', tableRouter);
 
 app.get('/', (req, res) => {
     res.send('API express de products').end();

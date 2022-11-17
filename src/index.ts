@@ -3,7 +3,7 @@ import { app } from './app.js';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { CustomError } from './interfaces/error';
+import { CustomError } from './interfaces/error.js';
 import { dbConnect } from './db.connect.js';
 
 const port = process.env.PORT || 7500;
