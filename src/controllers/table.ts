@@ -1,50 +1,32 @@
 import { NextFunction, Request, Response } from 'express';
 import { Data } from '../data/data.js';
+import { Table } from '../interfaces/table.js';
 import { HTTPError } from '../interfaces/error.js';
-import { Product } from '../interfaces/product.js';
 
-export class ProductController {
-    constructor(public dataModel: Data<Product>) {}
+export class TableController {
+    constructor(public repository: Data<Table>) {}
 
     async getAll(req: Request, resp: Response, next: NextFunction) {
         try {
-            const data = await this.dataModel.getAll();
-            resp.json(data).end();
+            const tables = await this.repository.getAll();
+            resp.json({ tables });
         } catch (error) {
-            const httpError = new HTTPError(
-                503,
-                'Service Unavailable',
-                (error as Error).message
-            );
+            const httpError = new HTTPError(503, 'Service Unavailable', (error as Error).message);
             next(httpError);
-            return;
         }
     }
     async get(req: Request, resp: Response, next: NextFunction) {
         try {
-            const data = await this.dataModel.get(req.params.id);
-            resp.json(data);
+            const table = await this.repository.get(req.params.id);
+            resp.json({ table });
         } catch (error) {
             next(this.#createHTTPError(error as Error));
-            return;
         }
     }
-        
-    
     async post(req: Request, resp: Response, next: NextFunction) {
-        if (!req.body.name) {
-            const httpError = new HTTPError(
-                406,
-                'Not Acceptable',
-                'Name not included in the data'
-            );
-            next(httpError);
-            return;
-        }
-
-        try {
-            const newProduct = await this.dataModel.post(req.body);
-            resp.json(newProduct).end();
+         try {
+             const table = await this.repository.post(req.body);
+             resp.json(({ table }));
         } catch (error) {
             const httpError = new HTTPError(
                 503,
@@ -52,40 +34,37 @@ export class ProductController {
                 (error as Error).message
             );
             next(httpError);
-            return;
         }
     }
     async patch(req: Request, resp: Response, next: NextFunction) {
         try {
-            const updateProduct = await this.dataModel.patch(
+            const table = await this.repository.patch(
                 req.params.id,
                 req.body
             );
-            resp.json(updateProduct).end();
+            resp.json({ table })
         } catch (error) {
             next(this.#createHTTPError(error as Error));
-            return;
-            
         }
     }
     async delete(req: Request, resp: Response, next: NextFunction) {
         try {
-            await this.dataModel.delete(req.params.id);
-            resp.json({}).end();
+            await this.repository.delete(req.params.id);
+            resp.json({})
         } catch (error) {
             next(this.#createHTTPError(error as Error));
             return;
         }
-    }
+    } 
     #createHTTPError (error: Error) {
-        if ((error as Error).message === 'Not found id') {
+        if ((error as Error).message === 'id Not found') {
             const httpError = new HTTPError(
                 404,
                 'Not Found',
                 (error as Error).message
             );
             return httpError;
-            
+
         }
         const httpError = new HTTPError(
             503,

@@ -6,7 +6,7 @@ export const productRouter = Router();
 
 const controller = new ProductController(new ProductFileData());
 
-//roductRouter.get('/', (req, resp) => controller.getAllController(req, resp));
+
 
 productRouter.get('/', controller.getAll.bind(controller));
 

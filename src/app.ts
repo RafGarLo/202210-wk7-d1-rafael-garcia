@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { productRouter } from './router/product.router.js';
 import { CustomError } from './interfaces/error.js';
+import { tableRouter } from './router/table.js';
 
 export const app = express();
 app.disable("x-powered-by");
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/furniture', productRouter);
+app.use('/table', tableRouter);
 
 app.get('/', (req, res) => {
     res.send('API express de products').end();
