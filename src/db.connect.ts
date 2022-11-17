@@ -5,6 +5,6 @@ export function dbConnect() {
     const DBName = process.env.NODE_ENV !== 'test' ? 'Tables' : 'CodersTesting';
     let uri = `mongodb+srv://${USER}${PASSWORD}`;
     uri += `${CLUSTER}${DBName}?retryWrites=true&w=majority`;
-    console.log(uri)
+    
     return mongoose.connect(uri);
 }
