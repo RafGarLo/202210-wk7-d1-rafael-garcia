@@ -28,13 +28,24 @@ describe('Given ...', () => {
         const result = await repository.getAll();
         expect(result[0].name).toEqual(mockData[0].name);
     });
-    test('Then post ...', async () => {
+    test('Then post should return the new object', async () => {
         const newTable = {
             name: 'mesaza',
         };
         const result = await repository.post(newTable);
         expect(result.name).toEqual(newTable.name);
     });
+    test('Then patch should return the object with the updated property', async () => {
+        const updatedTable = {
+          name: 'meson',
+        };
+    const result = await repository.patch(testIds[0], updatedTable);
+    expect(result.name).toEqual(updatedTable.name);
+    });
+    test('then the delete method should return an empty object', async () => {
+        const result = await repository.delete(testIds[0]);
+        expect(result).toBeUndefined();
+    })
     afterAll(() => {
         mongoose.disconnect();
     });
