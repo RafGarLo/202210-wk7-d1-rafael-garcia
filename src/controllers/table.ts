@@ -24,9 +24,9 @@ export class TableController {
         }
     }
     async post(req: Request, resp: Response, next: NextFunction) {
-         try {
-             const table = await this.repository.post(req.body);
-             resp.json(({ table }));
+        try {
+            const table = await this.repository.post(req.body);
+            resp.json(({ table }));
         } catch (error) {
             const httpError = new HTTPError(
                 503,
