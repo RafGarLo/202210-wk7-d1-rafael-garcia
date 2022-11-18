@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Data } from '../data/data.js';
-import { Table } from '../interfaces/table.js';
+import { Table } from '../entities/table.js';
 import { HTTPError } from '../interfaces/error.js';
 
 export class TableController {

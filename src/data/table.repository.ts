@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { ProtoTable, Table } from "../interfaces/table.js";
+import { ProtoTable, Table } from "../entities/table.js";
 import { Data, id } from "./data.js";
 
 export class TableRepository implements Data<Table> {

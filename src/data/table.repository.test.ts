@@ -46,6 +46,10 @@ describe('Given ...', () => {
         const result = await repository.delete(testIds[0]);
         expect(result).toBeUndefined();
     })
+    test('if delete method is incorrect , it should return an empty object', async () => {
+        expect(async () => {
+            await repository.delete(testIds[3])}).rejects.toThrowError();
+    })
     afterAll(() => {
         mongoose.disconnect();
     });

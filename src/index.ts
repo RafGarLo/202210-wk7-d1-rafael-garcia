@@ -3,6 +3,12 @@ import { app } from './app.js';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import debugFactory from 'debug'
+
+const debug = debugFactory('http')
+
+debug('hello debug')
+
 import { CustomError } from './interfaces/error.js';
 import { dbConnect } from './db.connect.js';
 
